@@ -1,0 +1,54 @@
+%график
+x = linspace(0,7,700);
+y = 3 - sqrt(x) - (1/2)*log(x);
+
+figure;
+hold on;
+title('function');
+xlabel('x');
+ylabel('y');
+plot(x,y, LineWidth=2,LineStyle="--");
+legend('3 - x^{(1/2)} - 0.5*ln(x)');
+grid on;
+axis equal;
+hold off;
+
+%тейлор
+syms x;
+f = 3 - sqrt(x) - (1/2)*log(x);
+taylor_series = taylor(f, x, 'ExpansionPoint', 1, 'Order', 3);
+pretty(taylor_series);
+
+%предел
+lim = limit(f, x, inf);
+fprintf('Предел функции при +беск: %s\n', char(lim));
+
+%свойства
+lim_0 = limit(f, x, 0, 'right');
+fprintf('Предел функции при +0: %s\n', char(lim_0));
+
+%производная и критическая точка
+f_diff = diff(f,x);
+fprintf('Первая производная: %s\n', char(f_diff));
+crit = solve(f_diff == 0, x);
+
+if(isempty(crit))
+    fprintf('Критическая точки нету \n');
+else
+    fprintf('Критическая точка: \n')
+    disp(crit);
+end
+
+figure;
+hold on;
+title('Teylor series');
+xlabel('x');
+ylabel('y');
+fplot(f, [0, 7],LineWidth=2,LineStyle=":");
+xline(0, 'r--', 'Вертикальная асимптота');
+yline(-inf, 'g--', 'Горизонтальная асимптота');
+legend('3 - x^{(1/2)} - 0.5*ln(x)');
+grid on;
+axis equal;
+yline(0, '--k');
+hold off;

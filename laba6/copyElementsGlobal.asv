@@ -1,0 +1,6 @@
+function copyElementsGlobal()
+    global amountCALL;
+    amountCALL=amountCALL+1;
+    first=find(X<0,1,"first");
+    last=find(X>0,1,"last");
+end
